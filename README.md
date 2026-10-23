@@ -187,8 +187,18 @@ actual camera layout; configure them rather than resizing an arbitrary view.
 ## Layout
 
 ```
-jevfabric/     client, prompts, geometry, decide, release, live, deployment, replay
-configs/       live.example.json
-scripts/       annotate.py, render_boxed.py, compare_to_labels.py, replay_live.py
+jevfabric/     client, prompts, geometry, decide, release, live, deployment, replay, serve
+configs/       live.example.json, live.lan.example.json
+docs/          lan-deployment.md
+scripts/       annotate.py, render_boxed.py, compare_to_labels.py, replay_live.py, serve_jev.py
 tests/
 ```
+
+## LAN deployment
+
+For a JEV model on one host and cameras/VLA on another, see
+[the LAN deployment guide](docs/lan-deployment.md) and
+[`configs/live.lan.example.json`](configs/live.lan.example.json).
+Keep the three camera streams on the VLA host; only JEV's perception requests
+and structured answers cross the LAN. The guide includes the external model
+server launcher, existing-owner hooks, expiry budgets and RTC integration.

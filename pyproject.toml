@@ -10,6 +10,7 @@ test = ["pytest"]
 
 [project.scripts]
 jevfabric-replay-live = "jevfabric.replay:main"
+jevfabric-serve-jev = "jevfabric.serve:main"
 
 [tool.setuptools]
 packages = ["jevfabric"]

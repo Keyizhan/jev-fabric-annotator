@@ -1,12 +1,16 @@
 [project]
 name = "jevfabric"
-version = "0.1.0"
+version = "0.2.0"
 description = "Label dual-arm fabric-sorting data with a typed-decision model (jev) plus geometry rules"
 requires-python = ">=3.10"
 dependencies = ["numpy", "opencv-python-headless", "pillow", "pyarrow"]
 
 [project.optional-dependencies]
 test = ["pytest"]
+
+[project.scripts]
+jevfabric-replay-live = "jevfabric.replay:main"
+jevfabric-serve-jev = "jevfabric.serve:main"
 
 [tool.setuptools]
 packages = ["jevfabric"]

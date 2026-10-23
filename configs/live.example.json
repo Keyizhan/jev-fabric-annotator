@@ -1,0 +1,21 @@
+{
+  "host": "127.0.0.1",
+  "port": 8091,
+  "request_timeout_s": 2.0,
+  "max_result_age_s": 2.0,
+  "max_frame_age_s": 0.25,
+  "max_feedback_age_s": 0.25,
+  "request_interval_s": 0.15,
+  "retry_delay_s": 0.5,
+  "geometry_hz": 15.0,
+  "frame_size": [640, 480],
+  "mat_box": [170, 205, 500, 480],
+  "basket_boxes": {
+    "left_far": [0, 155, 195, 245],
+    "left_middle": [0, 232, 195, 335],
+    "left_near": [0, 330, 195, 470],
+    "right_far": [438, 115, 600, 235],
+    "right_middle": [450, 190, 612, 320],
+    "right_near": [488, 300, 640, 425]
+  }
+}

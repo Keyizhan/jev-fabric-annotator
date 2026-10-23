@@ -12,7 +12,7 @@ from .live import AnnotationSnapshot, AnnotationUnavailable, LiveAnnotator
 
 
 class StalePrediction(AnnotationUnavailable):
-    """The target changed while VLA inference was running; discard this chunk."""
+    """A policy result has expired or its target changed; discard this chunk."""
 
 
 @dataclass(frozen=True)
@@ -103,6 +103,12 @@ class LivePolicyBridge:
         if not self.annotator.is_current(annotation.token):
             raise StalePrediction(
                 "target changed during policy inference; discard the result"
+            )
+        # A healthy stream can keep the same target while a particular policy
+        # request is stalled. Version checks alone cannot detect that old input.
+        if not self.annotator.snapshot_at(self._timestamp(observation)).healthy:
+            raise StalePrediction(
+                "policy response arrived after its observation expired"
             )
         return AnnotatedPrediction(value, annotation)
 

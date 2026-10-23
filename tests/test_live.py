@@ -256,6 +256,22 @@ def test_policy_result_invalidated_while_inference_is_running():
         assert len(errors) == 1 and isinstance(errors[0], StalePrediction)
 
 
+def test_stalled_policy_reply_expires_even_with_a_healthy_unchanged_target():
+    with running(max_frame_age_s=0.1) as (live, pump, _client):
+        wait_for(lambda: live.snapshot().phase == "TRACK")
+        bridge = LivePolicyBridge(live)
+        raw = {"cam_front": pump.frame, "observation_timestamp_ns": time.monotonic_ns()}
+        token = live.snapshot().token
+
+        def stalled(_observation):
+            time.sleep(0.15)
+            return np.zeros((50, 14))
+
+        with pytest.raises(StalePrediction, match="observation expired"):
+            bridge.predict(raw, stalled)
+        assert live.is_current(token)
+
+
 def test_no_images_or_labels_leak_across_an_episode_reset():
     live = LiveAnnotator(Image.new("RGB", (20, 20)), client_factory=Client).start()
     try:

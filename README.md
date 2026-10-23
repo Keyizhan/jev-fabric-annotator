@@ -134,6 +134,10 @@ and check it when selecting the next action, including partially consumed
 chunks. A check only at inference completion does not invalidate actions
 already buffered. This library does not implement a robot stop/hold command;
 the existing runtime owns that behavior when no valid candidate is available.
+On inference completion, `predict` also checks the source observation's age
+against `max_frame_age_s`: a stalled response is rejected even if new camera
+frames continue arriving and the target token remains unchanged. The runtime
+still owns the age/offset handling of valid chunks during RTC execution.
 
 Only the front image receives the training-compatible red rectangle
 `RGB(255,40,40)`, thickness 4, with no HUD or generated subtask text. Use the
